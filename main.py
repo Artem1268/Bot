@@ -8,5 +8,3 @@ class MyClient(discord.Client):
 
 client = MyClient()
 client.run('MTEyMjI1ODk0NzkzNjYyMDY1Ng.GT9O9Y.hj-mPoLlVAxXMP4mZP5c5pt1ZtlGpT-lZ_zQJs')
-
-
