@@ -7,6 +7,6 @@ class MyClient(discord.Client):
         print('Message from{0.author}: {0.content}'.format(message))
 
 client = MyClient()
-client.run('MTEyMjI1ODk0NzkzNjYyMDY1Ng.G_f0ej.gggsiuw4WpiDDNiSVflxhMJcLixsSpl6Rgo08M')
+client.run('MTEyMjI1ODk0NzkzNjYyMDY1Ng.GT9O9Y.hj-mPoLlVAxXMP4mZP5c5pt1ZtlGpT-lZ_zQJs')
 
 
