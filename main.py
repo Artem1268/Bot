@@ -6,7 +6,7 @@ from discord import app_commands
 import datetime
 
 from database import Database
-from pipisa import Pipisa, channel_check, update_role
+from pipisa import Pipisa, update_role
 
 # ──────────── Загрузка токена из .env ────────────
 load_dotenv()
@@ -58,8 +58,6 @@ async def on_ready():
 # ──────────── Команда /dick_play ────────────
 @client.tree.command(name="dick_play", description="Получить размер и обновить звание (12ч)")
 async def dick_play(interaction: discord.Interaction):
-    if not await channel_check(interaction):
-        return
 
     guild = interaction.guild
     user = interaction.user
@@ -97,8 +95,6 @@ async def dick_play(interaction: discord.Interaction):
 # ──────────── Команда /dick_get ────────────
 @client.tree.command(name="dick_get", description="Посмотреть свой размер")
 async def dick_get(interaction: discord.Interaction):
-    if not await channel_check(interaction):
-        return
 
     data = await client.db.get_sql(interaction.user.id, interaction.guild.id)
     size = data[0] if data else 0
@@ -108,8 +104,6 @@ async def dick_get(interaction: discord.Interaction):
 # ──────────── Команда /top_dick ────────────
 @client.tree.command(name="top_dick", description="Топ-10 игроков по размеру")
 async def top_dick(interaction: discord.Interaction):
-    if not await channel_check(interaction):
-        return
 
     await interaction.response.defer(ephemeral=True)
     top = await client.db.get_top(interaction.guild.id)
@@ -127,8 +121,6 @@ async def top_dick(interaction: discord.Interaction):
 @client.tree.command(name="droch", description="Подрочить на челика")
 @app_commands.describe(user="Цель")
 async def droch(interaction: discord.Interaction, user: discord.User):
-    if not await channel_check(interaction):
-        return
 
     gid = interaction.guild.id
     author = interaction.user
@@ -148,8 +140,6 @@ async def droch(interaction: discord.Interaction, user: discord.User):
 @client.tree.command(name="fuck", description="Выебать кого-то")
 @app_commands.describe(user="Цель")
 async def fuck(interaction: discord.Interaction, user: discord.User):
-    if not await channel_check(interaction):
-        return
 
     author = interaction.user
     if author.id == user.id:

@@ -29,45 +29,6 @@ class Pipisa:
             return True
         return random.random() < (diff / max_diff)
 
-
-async def channel_check(interaction: discord.Interaction, setup_db) -> bool:
-    """
-    Проверяет:
-      - Вызвана ли команда на сервере
-      - Если для сервера задан настроенный канал — совпадает ли он с текущим
-    """
-    if interaction.guild is None:
-        await interaction.response.send_message("❌ Не тот чат (только на сервере)", ephemeral=True)
-        return False
-
-    cfg = await setup_db.get_setup(interaction.guild.id)
-    channel_id = None
-
-    if cfg is None:
-        channel_id = None
-    elif isinstance(cfg, int):
-        channel_id = cfg
-    elif isinstance(cfg, (tuple, list)):
-        channel_id = int(cfg[0]) if cfg else None
-    else:
-        try:
-            channel_id = int(cfg)
-        except Exception:
-            try:
-                channel_id = int(cfg[0])
-            except Exception:
-                channel_id = None
-
-    if channel_id is None:
-        return True
-
-    if interaction.channel is None or interaction.channel.id != channel_id:
-        await interaction.response.send_message("❌ Не тот чат. Используйте настроенный канал.", ephemeral=True)
-        return False
-
-    return True
-
-
 async def update_role(member: discord.Member, cumulative_size: int, guild: discord.Guild) -> str:
     """Назначает роль участнику на основе cumulative_size."""
     roles_to_remove=[discord.utils.get(guild.roles, name=j) for j in ROLES_N]
