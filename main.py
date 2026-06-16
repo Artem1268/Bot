@@ -185,10 +185,11 @@ async def fuck(interaction: discord.Interaction, user: discord.User):
     down_votes = next((r.count - 1 for r in msg_obj.reactions if str(r.emoji) == '👎'), 0)
 
     if down_votes > up_votes and await client.pipisa.preventedFuck(vote['author_size'], vote['target_size']):
-        result = f"{vote['target'].display_name} дал отпор {vote['author'].display_name}."
+        result = f"{vote['target'].display_name} дал отпор {vote['author'].display_name}, никакого секса."
+    elif down_votes > up_votes and not await client.pipisa.preventedFuck(vote['author_size'], vote['target_size']):
+        result = f"{vote['author'].display_name} изнасиловал {vote['target'].display_name}, {vote['target'].display_name} остался с порваным очком"
     else:
-        result = f"{vote['author'].display_name} выебал {vote['target'].display_name}."
-
+        result = f"{vote['author'].display_name} выебал {vote['target'].display_name}, всё по обоюдному согласию"
     await vote['channel'].send(result)
 
 # Запуск бота
