@@ -202,17 +202,5 @@ async def fuck(interaction: discord.Interaction, user: discord.User):
 
     await vote['channel'].send(result)
 
-
-# ──────────── Команда /setup ────────────
-@client.tree.command(name="setup", description="Настройка канала для бота")
-@app_commands.describe(channel="Канал, в который бот будет писать (выберите из списка)")
-async def setup(interaction: discord.Interaction, channel: discord.TextChannel):
-    if interaction.user.id != interaction.guild.owner_id:
-        return await interaction.response.send_message("Вы не владелец сервера", ephemeral=True)
-
-    await client.setup_db.write_setup(interaction.guild.id, channel.id)
-    await interaction.response.send_message(f"Канал для бота установлен: {channel.mention}", ephemeral=True)
-
-
 # Запуск бота
 client.run(TOKEN)
