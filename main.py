@@ -5,7 +5,7 @@ import discord
 from discord import app_commands
 import datetime
 
-from database import Database, setupDatabase
+from database import Database
 from pipisa import Pipisa, channel_check, update_role
 
 # ──────────── Загрузка токена из .env ────────────
@@ -25,7 +25,6 @@ class MyClient(discord.Client):
         super().__init__(intents=intents)
         self.tree = app_commands.CommandTree(self)
         self.db = Database()
-        self.setup_db = setupDatabase()
         self.pipisa = Pipisa()
         self.active_votes: dict[int, dict] = {}
 
@@ -59,7 +58,7 @@ async def on_ready():
 # ──────────── Команда /dick_play ────────────
 @client.tree.command(name="dick_play", description="Получить размер и обновить звание (12ч)")
 async def dick_play(interaction: discord.Interaction):
-    if not await channel_check(interaction, client.setup_db):
+    if not await channel_check(interaction):
         return
 
     guild = interaction.guild
@@ -98,7 +97,7 @@ async def dick_play(interaction: discord.Interaction):
 # ──────────── Команда /dick_get ────────────
 @client.tree.command(name="dick_get", description="Посмотреть свой размер")
 async def dick_get(interaction: discord.Interaction):
-    if not await channel_check(interaction, client.setup_db):
+    if not await channel_check(interaction):
         return
 
     data = await client.db.get_sql(interaction.user.id, interaction.guild.id)
@@ -109,7 +108,7 @@ async def dick_get(interaction: discord.Interaction):
 # ──────────── Команда /top_dick ────────────
 @client.tree.command(name="top_dick", description="Топ-10 игроков по размеру")
 async def top_dick(interaction: discord.Interaction):
-    if not await channel_check(interaction, client.setup_db):
+    if not await channel_check(interaction):
         return
 
     await interaction.response.defer(ephemeral=True)
@@ -128,7 +127,7 @@ async def top_dick(interaction: discord.Interaction):
 @client.tree.command(name="droch", description="Подрочить на челика")
 @app_commands.describe(user="Цель")
 async def droch(interaction: discord.Interaction, user: discord.User):
-    if not await channel_check(interaction, client.setup_db):
+    if not await channel_check(interaction):
         return
 
     gid = interaction.guild.id
@@ -149,7 +148,7 @@ async def droch(interaction: discord.Interaction, user: discord.User):
 @client.tree.command(name="fuck", description="Выебать кого-то")
 @app_commands.describe(user="Цель")
 async def fuck(interaction: discord.Interaction, user: discord.User):
-    if not await channel_check(interaction, client.setup_db):
+    if not await channel_check(interaction):
         return
 
     author = interaction.user
